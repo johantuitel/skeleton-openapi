@@ -1,3 +1,9 @@
+/**
+ * Title: Skeleton Open Api.
+ * Description: This is the Skeleton Open Api definition.
+ *
+ * The version of the OpenAPI document: 0.1.9
+ */
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Configuration } from './configuration';
 import { HttpClientModule } from '@angular/common/http';

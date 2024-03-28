@@ -1,3 +1,9 @@
+/**
+ * Title: Skeleton Open Api.
+ * Description: This is the Skeleton Open Api definition.
+ *
+ * The version of the OpenAPI document: 0.1.9
+ */
 import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent, HttpParameterCodec, HttpContext 
