@@ -29,3 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## inspiration
 
 https://www.kevinboosten.dev/how-i-use-an-openapi-spec-in-my-angular-projects
+
+## angular typescript templates
+
+https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-angular
