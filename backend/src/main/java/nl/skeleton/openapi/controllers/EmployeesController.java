@@ -1,22 +1,15 @@
 package nl.skeleton.openapi.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
+import nl.skeleton.openapi.models.Employee;
+import nl.skeleton.openapi.models.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import nl.skeleton.openapi.models.Employee;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/skeleton/v1")
@@ -36,20 +29,55 @@ public class EmployeesController {
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Employee>> getAllEmployees() {
-        Collection<Employee> employeeCollection = new ArrayList<>(employees.values());
-        return new ResponseEntity<>(employeeCollection, HttpStatus.OK);
+        return new ResponseEntity<>(employees.values(), HttpStatus.OK);
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PutMapping(value = "/employees/{employeeId}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> updateEmployeeById(@PathVariable Long employeeId, @RequestBody Employee employee) {
+    @GetMapping(value = "/employees/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getEmployee(@PathVariable Long employeeId) {
         if(!this.employees.containsKey(employeeId)) {
-            return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseMessage("Employee not found"), HttpStatus.NOT_FOUND);
         }
-        
+        return new ResponseEntity<>(this.employees.get(employeeId), HttpStatus.OK);
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @PutMapping(value = "/employees/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage> updateEmployeeById(@PathVariable Long employeeId, @RequestBody Employee employee) {
+        if(!this.employees.containsKey(employeeId)) {
+            return new ResponseEntity<>(new ResponseMessage("Employee not found"), HttpStatus.NOT_FOUND);
+        }
+
         this.employees.put(employeeId, employee);
-        
-        return new ResponseEntity<>("Employee updated successfully", HttpStatus.OK);
+
+        return new ResponseEntity<>(new ResponseMessage("Employee updated successfully"), HttpStatus.OK);
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @PostMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage> createEmployee(@RequestBody Employee employee) {
+        if (employee.getId() == null) {
+            employee.setId(getHighestKey() + 1);
+        }
+        if(this.employees.containsKey(employee.getId())) {
+            return new ResponseEntity<>(new ResponseMessage("Employee already exists"), HttpStatus.BAD_REQUEST);
+        }
+
+        this.employees.put(employee.getId(), employee);
+
+        return new ResponseEntity<>(new ResponseMessage("Employee created successfully"), HttpStatus.CREATED);
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @DeleteMapping(value = "/employees/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage> deleteEmployeeById(@PathVariable Long employeeId) {
+        if(!this.employees.containsKey(employeeId)) {
+            return new ResponseEntity<>(new ResponseMessage("Employee not found"), HttpStatus.NOT_FOUND);
+        }
+
+        this.employees.remove(employeeId);
+
+        return new ResponseEntity<>(new ResponseMessage("Employee removed successfully"), HttpStatus.OK);
     }
 
     private Employee createEmployee(Long id, String name, String department, String position, Double salary) {
@@ -61,5 +89,15 @@ public class EmployeesController {
         employee.setSalary(salary);
 
         return employee;
+    }
+
+    private Long getHighestKey() {
+        Long highestKey = 1L;
+        for (Long key : employees.keySet()) {
+            if (key > highestKey) {
+                highestKey = key;
+            }
+        }
+        return highestKey;
     }
 }

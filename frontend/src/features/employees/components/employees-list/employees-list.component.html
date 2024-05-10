@@ -1,0 +1,29 @@
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h2>Employee Management</h2>
+  <button style="height: 2rem; width: 5rem; background-color: lightsalmon; cursor: pointer" (click)="new()">New</button>
+</div>
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th style="width: 10rem">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{employee.id}}</td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.position}}</td>
+        <td>{{employee.department}}</td>
+        <td>{{employee.salary}}</td>
+        <td>
+            <a style="cursor: pointer;" (click)="edit(employee)">Edit</a>
+            <a style="cursor: pointer; margin-left: 1rem" (click)="remove(employee.id)">Remove</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
