@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Employee Management API
+  description: CRUD operations for managing employees
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /employees:
+    get:
+      summary: Get all employees
+      responses:
+        '200':
+          description: Successfully retrieved all employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    post:
+      summary: Create a new employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '201':
+          description: Employee created successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+                example:
+                  message: One or more fields are invalid
+  /employees/{employeeId}:
+    get:
+      summary: Get an employee by ID
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully retrieved employee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+                example:
+                  message: Employee not found
+    put:
+      summary: Update an employee by ID
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          description: Employee updated successfully
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+                example:
+                  message: Employee not found
+    delete:
+      summary: Delete an employee by ID
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Employee removed successfully
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+                example:
+                  message: Employee not found
+components:
+  schemas:
+    Employee:
+      type: object
+      required:
+        - id
+        - name
+        - department
+        - position
+        - salary
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the employee
+        name:
+          type: string
+          description: Name of the employee
+          pattern: ^[a-zA-Z0-9\s\-]+$
+        department:
+          type: string
+          description: Department of the employee
+          enum:
+            - IT
+            - FINANCE
+        position:
+          type: string
+          description: Position of the employee
+        salary:
+          type: number
+          format: double
+          description: Salary of the employee
+          minimum: 0
+    ErrorMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
