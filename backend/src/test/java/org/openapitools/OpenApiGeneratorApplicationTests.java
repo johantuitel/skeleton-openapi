@@ -1,13 +1,13 @@
-package nl.skeleton.openapi.company;
+package org.openapitools;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OpenApiApplicationTests {
+class OpenApiGeneratorApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
