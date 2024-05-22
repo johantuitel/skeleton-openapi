@@ -4,10 +4,11 @@ info:
   description: CRUD operations for managing employees
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api
+  - url: /skeleton/v1
 paths:
   /employees:
     get:
+      operationId: getEmployees
       summary: Get all employees
       responses:
         '200':
@@ -19,6 +20,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Employee'
     post:
+      operationId: createEmployee
       summary: Create a new employee
       requestBody:
         required: true
@@ -39,6 +41,7 @@ paths:
                   message: One or more fields are invalid
   /employees/{employeeId}:
     get:
+      operationId: getEmployeeById
       summary: Get an employee by ID
       parameters:
         - name: employeeId
@@ -63,6 +66,7 @@ paths:
                 example:
                   message: Employee not found
     put:
+      operationId: updateEmployee
       summary: Update an employee by ID
       parameters:
         - name: employeeId
@@ -89,6 +93,7 @@ paths:
                 example:
                   message: Employee not found
     delete:
+      operationId: deleteEmployee
       summary: Delete an employee by ID
       parameters:
         - name: employeeId

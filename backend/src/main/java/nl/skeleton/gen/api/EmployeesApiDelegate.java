@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link EmployeesApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-20T23:14:33.651827600+02:00[Europe/Amsterdam]", comments = "Generator version: 7.5.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-22T14:38:04.639431600+02:00[Europe/Amsterdam]", comments = "Generator version: 7.5.0")
 public interface EmployeesApiDelegate {
 
     /**

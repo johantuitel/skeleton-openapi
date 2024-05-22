@@ -26,9 +26,9 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-20T23:13:11.531162100+02:00[Europe/Amsterdam]", comments = "Generator version: 7.5.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-22T14:37:31.932994300+02:00[Europe/Amsterdam]", comments = "Generator version: 7.5.0")
     @Controller
-@RequestMapping("${openapi.employeeManagement.base-path:/skeleton/v1}")
+@RequestMapping("/skeleton/v1")
 public class EmployeesApiController implements EmployeesApi {
 
     private final EmployeesApiDelegate service;
